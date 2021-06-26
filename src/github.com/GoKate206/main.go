@@ -23,7 +23,9 @@ const (
 type Grid [][]int
 
 func main() {
-  first := Grid{
+  givenIterations := 20
+  iteration := 1
+  firstGeneration := Grid{
     {0,0,0,0,0,0,0,0,0,0},
     {0,0,1,1,0,0,0,0,0,0},
     {0,0,0,0,2,0,0,0,0,0},
@@ -35,9 +37,13 @@ func main() {
     {0,0,0,0,0,0,0,0,0,0},
     {0,0,0,0,0,0,0,0,0,0},
   }
+  generation := populateNewGeneration(firstGeneration)
+  for iteration < givenIterations {
+    generation = populateNewGeneration(generation)
+    iteration++
+  }
+  fmt.Printf("\n\n 20th Generation is: %v \n\n", generation)
 
-  a := populateNewGeneration(first)
-  fmt.Println(a)
 }
 
 func createEmptyGeneration() Grid {
@@ -50,16 +56,16 @@ func createEmptyGeneration() Grid {
 }
 
 func populateNewGeneration(grid Grid) Grid {
-  newGenrations := createEmptyGeneration()
+  newGeneration := createEmptyGeneration()
   for rowIndex := range grid {
     row := grid[rowIndex]
     for cellIndex := range row {
       cell := row[cellIndex]
       count := getNeighborCount(grid, rowIndex, cellIndex)
-      newGenrations[rowIndex][cellIndex] = getNewValue(cell, count)
+      newGeneration[rowIndex][cellIndex] = getNewValue(cell, count)
     }
   }
-  return newGenrations
+  return newGeneration
 }
 
 func getNeighborCount(grid Grid, row, cell int) NeighborCount {
@@ -108,14 +114,17 @@ func getNeighborCount(grid Grid, row, cell int) NeighborCount {
       continue
     }
 
-    if grid[nIndex.row][nIndex.cell] == adult {
-      adultCount++
+    oldCell := grid[nIndex.row][nIndex.cell]
+    if oldCell != empty {
+      total++
+      if (oldCell == adult) {
+        adultCount++
+      }
     }
-    total++
   }
 
   return NeighborCount{
-    adult: adult,
+    adult: adultCount,
     total: total,
   }
 }
