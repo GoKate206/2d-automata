@@ -42,17 +42,11 @@ func main() {
     generation = populateNewGeneration(generation)
     iteration++
   }
-  fmt.Printf("\n\n 20th Generation is: %v \n\n", generation)
-
-}
-
-func createEmptyGeneration() Grid {
-  grid := make(Grid, gridLength)
-  for i := range grid {
-    grid[i] = make([]int, gridLength)
+  fmt.Print("\n 20th Generation is: \n")
+  for _, row := range generation {
+    fmt.Printf("\n%v", row)
   }
 
-  return grid
 }
 
 func populateNewGeneration(grid Grid) Grid {
@@ -66,6 +60,16 @@ func populateNewGeneration(grid Grid) Grid {
     }
   }
   return newGeneration
+}
+
+// *-- Helper Methods --*
+func createEmptyGeneration() Grid {
+  grid := make(Grid, gridLength)
+  for i := range grid {
+    grid[i] = make([]int, gridLength)
+  }
+
+  return grid
 }
 
 func getNeighborCount(grid Grid, row, cell int) NeighborCount {
@@ -106,11 +110,11 @@ func getNeighborCount(grid Grid, row, cell int) NeighborCount {
   total := 0
   adultCount := 0
   for _, nIndex := range indexes {
-    if nIndex.row > 9 || nIndex.row < 0 {
+    if nIndex.row > (gridLength - 1) || nIndex.row < 0 {
       continue
     }
 
-    if nIndex.cell > 9 || nIndex.cell < 0 {
+    if nIndex.cell > (gridLength - 1) || nIndex.cell < 0 {
       continue
     }
 
