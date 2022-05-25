@@ -1,6 +1,6 @@
 ### Requirements
 - Given a 2D Array to reflect a 10x10 grid of cells
-- Cells by be alive or empty. What stage of life is reflected by a number
+- Cells may be alive or empty. What stage of life is reflected by a number
 - Cells "age" according to rules similar to Conway's Game of Life
 - Assuming the first grid is the first generation, what would generation 20 look like?
 
